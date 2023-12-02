@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Focus Screen</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        #pomodoroCount {
+            font-size: 24px;
+            color: #3498db;
+            margin-bottom: 10px;
+        }
+
+        #taskInfo {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        #taskName {
+            font-size: 20px;
+            margin-right: 10px;
+        }
+
+        #hourglassContainer {
+            height: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #hourglass {
+            width: 50px;
+            height: 100px;
+            background-color: #ecf0f1;
+            position: relative;
+        }
+
+        #sand {
+            width: 50px;
+            height: 0%;
+            background-color: #e74c3c;
+            position: absolute;
+            bottom: 0;
+            transition: height 1s;
+        }
+
+        #controls {
+            display: flex;
+            margin-top: 20px;
+        }
+
+        button {
+            font-size: 16px;
+            margin-right: 10px;
+            padding: 10px;
+            cursor: pointer;
+            border: none;
+            background-color: #2ecc71;
+            color: white;
+            border-radius: 5px;
+        }
+
+        button:hover {
+            background-color: #27ae60;
+        }
+    </style>
+</head>
+<body>
+
+<div id="pomodoroCount">Pomodoros Completed: <span id="pomodoroCounter">3</span></div>
+
+<div id="taskInfo">
+    <label for="taskName" id="taskNameLabel">Task Name:</label>
+    <input type="text" id="taskName" placeholder="Enter task name">
+    <input type="checkbox" id="completeTask"> <label for="completeTask">Complete Task</label>
+</div>
+
+<div id="hourglassContainer">
+    <div id="hourglass">
+        <div id="sand"></div>
+    </div>
+</div>
+
+<div id="controls">
+    <button onclick="stopTimer()">Stop Timer</button>
+    <button onclick="startTimer()">Play</button>
+    <button onclick="exit()">Exit</button>
+</div>
+
+<script>
+    let pomodoroCount = 3;
+    let timerRunning = false;
+
+    function startTimer() {
+        if (!timerRunning) {
+            timerRunning = true;
+            document.getElementById('sand').style.height = '100%';
+            setTimeout(() => {
+                document.getElementById('sand').style.height = '0%';
+                pomodoroCount++;
+                document.getElementById('pomodoroCounter').textContent = pomodoroCount;
+                timerRunning = false;
+            }, 25000*60); // Adjust the time for testing (15000 milliseconds = 15 seconds)
+        }
+    }
+
+    function stopTimer() {
+        timerRunning = false;
+        document.getElementById('sand').style.height = '0%';
+    }
+
+    function exit() {
+        // Add any additional exit logic here
+        alert('Exiting Focus Screen');
+    }
+</script>
+
+</body>
+</html>

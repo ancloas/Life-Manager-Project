@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Tracker</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        #time {
+            text-align: center;
+            background-color: #f0f0f0;
+            padding: 10px;
+        }
+
+        #hourglass {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 50px;
+        }
+
+        .hour {
+            width: 10px;
+            height: 50px;
+            border: 1px solid #ccc;
+            margin: 0 2px;
+        }
+
+        #todo, #office {
+            margin-top: 20px;
+        }
+
+        .task-section {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .task-list {
+            width: 45%;
+        }
+
+        .task-list h2 {
+            margin-bottom: 5px;
+        }
+
+        .task-list ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .task-list li {
+            margin-bottom: 5px;
+        }
+
+        #tables {
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .table {
+            width: 30%;
+            border: 1px solid #ccc;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div id="time">
+    <h1>Current Time: <span id="currentTime"></span></h1>
+    <div id="hourglass"></div>
+</div>
+
+<div id="todo" class="task-section">
+    <div class="task-list">
+        <h2>Todo List</h2>
+        <ul id="todoList"></ul>
+        <input type="text" id="newTodo" placeholder="Add new task">
+        <button onclick="addTask('todoList', 'newTodo')">Add Task</button>
+    </div>
+</div>
+
+<div id="office" class="task-section">
+    <div class="task-list">
+        <h2>Office Tasks</h2>
+        <ul id="officeList"></ul>
+        <input type="text" id="newOfficeTask" placeholder="Add new office task">
+        <button onclick="addTask('officeList', 'newOfficeTask')">Add Task</button>
+    </div>
+</div>
+
+<div id="tables">
+    <div class="table">
+        <h2>Table 1</h2>
+        <!-- Add content for Table 1 -->
+    </div>
+    <div class="table">
+        <h2>Table 2</h2>
+        <!-- Add content for Table 2 -->
+    </div>
+    <div class="table">
+        <h2>Table 3</h2>
+        <!-- Add content for Table 3 -->
+    </div>
+</div>
+
+<script>
+    // Function to add a new task to a specific task list
+    function addTask(listId, inputId) {
+        const taskList = document.getElementById(listId);
+        const newTaskInput = document.getElementById(inputId);
+        const taskText = newTaskInput.value.trim();
+
+        if (taskText !== '') {
+            const listItem = document.createElement('li');
+            listItem.textContent = taskText;
+            taskList.appendChild(listItem);
+            newTaskInput.value = '';
+        }
+    }
+
+    // Function to update the current time
+    function updateTime() {
+        const currentTimeElement = document.getElementById('currentTime');
+        const now = new Date();
+        const hours = now.getHours();
+        const minutes = now.getMinutes();
+        const seconds = now.getSeconds();
+        const formattedTime = `${hours}:${minutes}:${seconds}`;
+        currentTimeElement.textContent = formattedTime;
+    }
+
+    // Update the time every second
+    setInterval(updateTime, 1000);
+
+    // Generate hourglass squares
+    const hourglass = document.getElementById('hourglass');
+    for (let i = 0; i < 10; i++) {
+        const hourSquare = document.createElement('div');
+        hourSquare.className = 'hour';
+        hourglass.appendChild(hourSquare);
+    }
+</script>
+
+</body>
+</html>
