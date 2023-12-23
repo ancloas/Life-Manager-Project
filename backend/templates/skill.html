@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flashcards Page</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        h1 {
+            color: #3498db;
+        }
+
+        #container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+            max-width: 600px;
+        }
+
+        #horizontalDivs {
+            display: flex;
+            width: 100%;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        .cardContainer {
+            width: 48%; /* Adjust the width as needed */
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        #flashcards {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+
+        .flashcard {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 20px;
+            margin: 10px;
+            width: calc(30% - 20px); /* Adjust the width as needed with margin */
+            text-align: center;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Skill Name - {proficiency level}</h1>
+
+<div id="container">
+    <div id="horizontalDivs">
+        <div class="cardContainer">
+            <!-- Content for the first div -->
+            <h3>To Accuire</h3>
+            <p>Content goes here</p>
+        </div>
+
+        <div class="cardContainer">
+            <!-- Content for the second div -->
+            <h3>Accuired</h3>
+            <p>Content goes here</p>
+        </div>
+    </div>
+    <h2>Stats Associated/affected</h2>
+    <div id="flashcards">
+        <!-- Flashcards representing different items -->
+        <div class="flashcard">Item 1</div>
+        <div class="flashcard">Item 2</div>
+        <div class="flashcard">Item 3</div>
+        <div class="flashcard">Item 4</div>
+        <div class="flashcard">Item 5</div>
+        <!-- Add more flashcards as needed -->
+    </div>
+</div>
+
+</body>
+</html>

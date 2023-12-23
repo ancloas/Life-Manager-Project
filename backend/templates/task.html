@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Flashcards Page</title>
+    <style>
+      #edittask {
+        background-color: gray;
+        border: 1px solid black;
+      }
+
+      .taskinput {
+        border: none;
+        outline: none; /* Optional: Removes the default focus outline */
+        font-size: 1em; /* Adjust the font size as needed */
+        color: black;
+      }
+
+      input::placeholder {
+        color: black; /* Change the placeholder color to black */
+      }
+
+      #container {
+        display: flex;
+      }
+      .side-card{
+        background-color: green;
+        margin: 10px;
+        padding: 5px;
+      }
+      
+
+    </style>
+  </head>
+  <body>
+    <div id="container">
+        <div>
+          <div>
+            <div id="edittask">
+              <h1>
+                <input class="taskinput" type="text" placeholder="taskname" />
+              </h1>
+              <input class="taskinput" type="text" placeholder="descreption" />
+            </div>
+            <button>cancel</button>
+            <button>save</button>
+          </div>
+    
+          <div>
+            <h2>+ Add Subtasks</h2>
+          </div>
+    
+          <div style="background-color: pink">
+            comment<br />
+            <input type="comment" />
+          </div>
+        </div>
+
+        <div id="side_bar">
+            <div class="side-card">priority</div>
+            <div class="side-card">due date</div>
+            <div class="side-card">Project Associated</div>
+            <div class="side-card">tag</div>
+            <div class="side-card">Estimate</div>
+        </div>
+
+    </div>    
+  </body>
+</html>
