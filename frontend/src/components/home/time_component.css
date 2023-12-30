@@ -1,0 +1,17 @@
+/* Add your styles to customize the appearance */
+.grid-container {
+  display: flex;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); /* Adjust as needed */
+  gap: 10px; /* Adjust the gap between items as needed */
+  box-sizing: border-box;
+
+}
+
+.hour {
+  border: 1px solid #c40f0f;
+  background-color: greenyellow;
+  padding: 10px;
+  text-align: center;
+}
+
+/* Add any additional styling for RectangleComponent if needed */

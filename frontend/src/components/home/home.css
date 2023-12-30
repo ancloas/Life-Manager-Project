@@ -1,0 +1,7 @@
+.heading{
+    background-color: rgb(88, 3, 3);
+    color: white;
+}
+.container{
+    gap: 20px; /* Adjust gutter size as needed */
+}
