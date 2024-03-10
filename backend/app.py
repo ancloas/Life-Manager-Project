@@ -52,13 +52,6 @@ def get_time_component():
 
 	
 
-	# Returning an api for showing in reactjs
-	return {
-		'sleeptime':sleeptime,
-		'starttime': starttime,
-		'wakeuptime': wakeuptime
-		}
-
 
 	
 # Running app
