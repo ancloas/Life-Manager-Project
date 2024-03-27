@@ -5,8 +5,10 @@ from sqlalchemy.orm import sessionmaker, relationship
 from datetime import datetime
 from dotenv import load_dotenv
 import os
-from user import User
-from base import Base
+from .user import User
+from .base import Base
+from utilities.encoding_utils import encode_primary_key, decode_primary_key
+from enum import Enum
 
 
 load_dotenv()
@@ -15,6 +17,14 @@ sql_user_name= os.getenv('SQL_USERNAME')
 sql_password= os.getenv('SQL_PASSWORD')
 server_name = os.getenv('SQL_SERVER')
 database_name = os.getenv('DATABASE_NAME')
+
+
+class Status(Enum):
+    NOT_STARTED = 'not_started'
+    IN_PROGRESS = 'in_progress'
+    COMPLETED = 'completed'
+    values = ['not_started', 'in_progress', 'completed']
+
 
 class Task(Base):
     __tablename__ = 'Task'
@@ -27,7 +37,7 @@ class Task(Base):
     Due_Date = Column(DateTime)
     Estimate_in_minutes = Column(Integer)
     Tags_associated = Column(String(255))
-    Subtasks = Column(String(255))
+    parentid = Column(Integer)
     Actual_Effort_in_minutes = Column(Integer)
     Project_ID_associated = Column(Integer)
     Syllabus_ID_associated = Column(Integer)
@@ -36,12 +46,14 @@ class Task(Base):
     Is_Repeatable = Column(Boolean)
     User_ID = Column(Integer, ForeignKey('User.ID'))  # Define foreign key column
     
+    
     def __init__(self, user_id,  name, description, status='Pending', priority=None,
                  due_date=None, estimate_minutes=None, tags_associated=None,
-                 subtasks=None, actual_effort_minutes=None,
+                 parentid=None, 
                  project_id_associated=None, syllabus_id_associated=None,
                  is_repeatable=None):
         """Initialize a new Task instance."""
+        self.atomic=True
         self.Name = name
         self.User_ID = user_id  # Set the User_ID attribute with the provided user ID
         self.Description = description
@@ -50,22 +62,54 @@ class Task(Base):
         self.Due_Date = due_date
         self.Estimate_in_minutes = estimate_minutes
         self.Tags_associated = tags_associated
-        self.Subtasks = subtasks
-        self.Actual_Effort_in_minutes = actual_effort_minutes
+        self.parentid = parentid
+        self.Actual_Effort_in_minutes = 0
         self.Project_ID_associated = project_id_associated
         self.Syllabus_ID_associated = syllabus_id_associated
         self.Is_Repeatable = is_repeatable
 
+    
     def schedule_task(self, due_date, estimate_minutes):
         """Schedule the task by setting due date and estimated time."""
         self.Due_Date = due_date
         self.Estimate_in_minutes = estimate_minutes
-        self.Status = 'Scheduled'
 
+    
     def update_progress(self, actual_effort_minutes):
         """Update the progress by setting actual effort in minutes."""
-        self.Actual_Effort_in_minutes = actual_effort_minutes
-        self.Status = 'Completed' if actual_effort_minutes >= self.Estimate_in_minutes else 'In Progress'
+        self.Actual_Effort_in_minutes += actual_effort_minutes
+        self.Status = Status.COMPLETED.value if actual_effort_minutes >= self.Estimate_in_minutes else Status.IN_PROGRESS.value
+    
+    
+    def update_status(self, new_status):
+        if new_status in Status.values:
+            self.status=new_status
+    
+
+    def complete(self):
+        self.status= Status.COMPLETED.value
+        
+        
+    def update(self, name=None, description=None, priority=None, estimate_minutes=None, tags=None, subtasks=None, project_id_associated=None, syllabus_id_associated=None, is_repeatable=None):
+        if name:
+            self.name=name
+        if description:
+            self.description=description    
+        if priority:
+            self.priority=priority
+        if estimate_minutes:
+            self.estimate_minutes=estimate_minutes
+        if tags:
+            self.tags_associated=tags
+        if subtasks:
+            self.subtasks= subtasks
+        if project_id_associated:
+            self.project_id_associated=project_id_associated
+        if syllabus_id_associated:
+            self.syllabus_id_associated=syllabus_id_associated
+        if is_repeatable:
+            self.is_repeatable=is_repeatable
+
 
     # Getter and setter methods for each property
     @property
@@ -171,6 +215,26 @@ class Task(Base):
     @is_repeatable.setter
     def is_repeatable(self, value):
         self.Is_Repeatable = value
+
+    
+    def to_dict(self):
+        """Return a dictionary representation of the task."""
+        return {
+            "Encoded_Task_ID": encode_primary_key(self.ID),
+            "Name": self.Name,
+            "User_ID": self.User_ID,
+            "Description": self.Description,
+            "Status": self.Status,
+            "Priority": self.Priority,
+            "Due_Date": self.Due_Date,
+            "Estimate_in_minutes": self.Estimate_in_minutes,
+            "Tags_associated": self.Tags_associated,
+            "parentid": self.parentid,
+            "Actual_Effort_in_minutes": self.Actual_Effort_in_minutes,
+            "Project_ID_associated": self.Project_ID_associated,
+            "Syllabus_ID_associated": self.Syllabus_ID_associated,
+            "Is_Repeatable": self.Is_Repeatable
+        }
 
 # Replace 'your_database_uri' with the appropriate connection URI for your SQL Server instance.
 # Example: 'mssql+pyodbc://username:password@localhost:1433/your_database'

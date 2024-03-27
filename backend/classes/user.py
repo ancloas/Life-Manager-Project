@@ -6,7 +6,7 @@ from datetime import datetime
 from dotenv import load_dotenv
 import os
 from sqlalchemy.orm import relationship
-from base  import Base
+from .base  import Base
 
 
 load_dotenv()

@@ -4,7 +4,7 @@ from sqlalchemy.orm import sessionmaker
 from datetime import datetime
 from dotenv import load_dotenv
 import os
-from user import User
+from .user import User
 
 Base = declarative_base()
 

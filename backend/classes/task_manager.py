@@ -1,69 +1,79 @@
 import datetime
-from task import Task
-from session_manager import SessionManager
+from .task import Task  # Assuming you have defined Task class
+from utilities.encoding_utils import decode_primary_key
 
 class Task_Manager:
-    def __init__(self, session_manager: SessionManager):
-        self.tasks = []
-        self.session_manager = session_manager
+    def __init__(self, session):
+        self.session = session
 
-
-    #Add Task
-    def add_task(self, user_id, name, description=None, priority='low', tags=None, subtasks= None, project_id_associated=None, syllabus_id_associated=None, is_repeatable=False):
+    def add_task(self, user_id, name, description=None, priority='low', estimate_minutes=None, tags=None, subtasks=None, project_id_associated=None, syllabus_id_associated=None, is_repeatable=False):
         """Add a task to the task manager."""
         task = Task(
-        name='Example Task',
-        user_id=1,
-        description='This is a sample task.',
-        priority='High',
-        tags_associated='tag1,tag2',
-        subtasks='Subtask 1, Subtask 2',
-        project_id_associated=1,
-        syllabus_id_associated=2,
-        is_repeatable=True
+            name=name,
+            user_id=user_id,
+            description=description,
+            priority=priority,
+            tags_associated=tags,
+            subtasks=subtasks,
+            estimate_minutes= estimate_minutes,
+            project_id_associated=project_id_associated,
+            syllabus_id_associated=syllabus_id_associated,
+            is_repeatable=is_repeatable
         )
-        self.tasks.append(task) 
-        session = self.session_manager.create_session()
-        session.add(task)
-        session.commit()
-        self.session_manager.close_session()
+        self.session.add(task)
+        self.session.commit()
+
+    def update_task(self, task_id,  name=None, description=None, priority=None, estimate_minutes=None, tags=None, subtasks=None, project_id_associated=None, syllabus_id_associated=None, is_repeatable=None, encrypted=False):
+        
+        task = self.get_task_by_id(task_id, encryted= encrypted)
+        task.update(task_id,  name, description, priority, estimate_minutes, tags, subtasks, project_id_associated, syllabus_id_associated, is_repeatable)  
+        self.session.commit()
 
 
-
-    #Delete Task
     def remove_task(self, task_id):
         """Remove a task from the task manager and database."""
         task = self.get_task_by_id(task_id=task_id)
-        if task in self.tasks:
-            self.tasks.remove(task)
-            session = self.session_manager.create_session()
-            session.delete(task)
-            session.commit()
-            self.session_manager.close_session(session)
+        if task:
+            self.session.delete(task)
+            self.session.commit()
 
-
-    #Start Task
-        
-    
-    #Update Task details: name, description, due_date, estimate, etc
-        
-
-
-    # List Tasks
-    def get_task_by_id(self, task_id):
+    def get_task_by_id(self, task_id, encryted=False, user_id=None)->Task: 
         """Get a task by its ID."""
-        for task in self.tasks:
-            if task.ID == task_id:
-                return task
-        return None
+        if encryted:
+            task_id= decode_primary_key(task_id)
+        return self.session.query(Task).filter_by(ID=task_id).first()
 
-    def get_tasks_by_status(self, status):
+    def get_tasks_by_status(self, status)->list[Task]:
         """Get tasks with a specific status."""
-        return [task for task in self.tasks if task.Status == status]
+        return self.session.query(Task).filter_by(Status=status).all()
+    
+    def get_active_tasks(self)->list[Task]:
+        return self.session.query(Task).filter_by(Task.Status !='completed').all()
 
-    def get_overdue_tasks(self):
+
+    def get_overdue_tasks(self)->list[Task]:
         """Get tasks that are overdue."""
-        return [task for task in self.tasks if task.Status != 'Completed' and task.Due_Date is not None and task.Due_Date < datetime.now()]     
+        return self.session.query(Task).filter(Task.Status != 'Completed', Task.Due_Date < datetime.datetime.now()).all()
 
-    def list_all_tasks(self, status):
-        return self.tasks    
+
+    def list_all_tasks_for_user_id(self, user_id)->list[Task]:
+        """List all tasks."""
+        return self.session.query(Task).filter_by(User_ID= user_id).all()
+    
+
+    def close_session(self):
+        """Close the session."""
+        self.session.close()
+
+
+    def complete_task(self, task_id, encryted = False):
+        task=self.get_task_by_id(task_id=task_id, encryted=encryted)
+        task.complete()
+        self.session.commit()
+
+
+    def __del__(self):
+        """Destructor to close the session."""
+        self.session.close()
+  
+    
