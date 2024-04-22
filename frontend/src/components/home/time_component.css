@@ -1,17 +1,39 @@
-/* Add your styles to customize the appearance */
+/* time_component.css */
+
 .grid-container {
   display: flex;
-  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); /* Adjust as needed */
-  gap: 10px; /* Adjust the gap between items as needed */
-  box-sizing: border-box;
+}
 
+.block10 {
+  flex: 0 1 calc(10% - 5px); /* Set each grid item to occupy 10% of the container width minus gap */
+  text-align: center;
+  color: white
+}
+
+.row {
+  margin-bottom: 10px;
+}
+
+.heading {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* Add more styles as needed */
+
+.present {
+  background-color: blue; /* Blue color for present state */
+}
+
+.future {
+  background-color: green; /* Green color for future state */
+}
+
+.past {
+  background-color: red; /* Red color for past state */
 }
 
 .hour {
-  border: 1px solid #c40f0f;
-  background-color: greenyellow;
-  padding: 10px;
-  text-align: center;
-}
+  border-left: 1px solid rgb(255, 255, 255); /* Adjust the width and color of the left border as needed */
 
-/* Add any additional styling for RectangleComponent if needed */
+}

@@ -7,7 +7,7 @@ import ToDo from './todo';
 // import {UpcomingComponent} from "./snippets/upcoming/upcoming"
 
 
-export const Desktop = () => {
+export const Home = () => {
     return (
         <div className="container">
                 <TimeFrame></TimeFrame>

@@ -6,7 +6,7 @@ class Task_Manager:
     def __init__(self, session):
         self.session = session
 
-    def add_task(self, user_id, name, description=None, priority='low', estimate_minutes=None, tags=None, subtasks=None, project_id_associated=None, syllabus_id_associated=None, is_repeatable=False):
+    def add_task(self, user_id, name, description=None, priority='low', estimate_minutes=None, tags=None, parentid=None, project_id_associated=None, syllabus_id_associated=None, is_repeatable=False):
         """Add a task to the task manager."""
         task = Task(
             name=name,
@@ -14,7 +14,7 @@ class Task_Manager:
             description=description,
             priority=priority,
             tags_associated=tags,
-            subtasks=subtasks,
+            parentid=parentid,
             estimate_minutes= estimate_minutes,
             project_id_associated=project_id_associated,
             syllabus_id_associated=syllabus_id_associated,
@@ -23,10 +23,10 @@ class Task_Manager:
         self.session.add(task)
         self.session.commit()
 
-    def update_task(self, task_id,  name=None, description=None, priority=None, estimate_minutes=None, tags=None, subtasks=None, project_id_associated=None, syllabus_id_associated=None, is_repeatable=None, encrypted=False):
+    def update_task(self, task_id,  name=None, description=None, priority=None, estimate_minutes=None, tags=None, parentid=None, project_id_associated=None, syllabus_id_associated=None, is_repeatable=None, encrypted=False):
         
         task = self.get_task_by_id(task_id, encryted= encrypted)
-        task.update(task_id,  name, description, priority, estimate_minutes, tags, subtasks, project_id_associated, syllabus_id_associated, is_repeatable)  
+        task.update(task_id, name, description, priority, estimate_minutes, tags, parentid, project_id_associated, syllabus_id_associated, is_repeatable)  
         self.session.commit()
 
 

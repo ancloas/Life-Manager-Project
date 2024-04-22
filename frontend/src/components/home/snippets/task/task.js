@@ -1,20 +1,13 @@
-// RectangleComponent.jsx
-import React, { useState } from "react";
-import Button from "../../../utilities/button"
+import React from "react";
 import { Checkbox } from "@mui/material";
 import { Card } from "antd";
-import PlayCircleFilledIcon from '@mui/icons-material/PlayCircleFilled';
-import LinearScaleIcon from '@mui/icons-material/LinearScale';
+import PlayCircleFilledIcon from "@mui/icons-material/PlayCircleFilled";
+import LinearScaleIcon from "@mui/icons-material/LinearScale";
 import "./task.css"; // Import the CSS file
-import { Link } from 'react-router-dom';
-
+import { Link } from "react-router-dom";
 
 const PlayButton = () => {
-
-
-  return (
-    <PlayCircleFilledIcon />
-  );
+  return <PlayCircleFilledIcon />;
 };
 
 const TaskComponent = ({ task }) => {
@@ -22,18 +15,23 @@ const TaskComponent = ({ task }) => {
     return <div>No task provided</div>;
   }
 
-
-
   return (
-      <div className="task-content">
-        <Checkbox />
-        <PlayButton />
-        <Link to={`/task_detail/${task.id}`}>
-          {task.Name}
-        </Link>
-        <LinearScaleIcon />
-      </div>
+    <div className="task-content">
+      <Checkbox />
+      <PlayButton />
+      <Link
+        to={{
+          pathname: `/task_details`,
+          state: { task: task }
+        }}
+        className="task-link"
+      >
+        {task.Name}
+      </Link>
+      <LinearScaleIcon />
+    </div>
   );
 };
 
 export default TaskComponent;
+

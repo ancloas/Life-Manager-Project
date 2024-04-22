@@ -5,7 +5,7 @@ import config from '../../config'
 import Banner from '../utilities/banner';
 import TaskComponent from './snippets/task/task';
 import TaskListComponent from './snippets/task/tasklist';
-
+import './todo.css';
 
 
 const NewTaskComponent = () => {
@@ -20,16 +20,15 @@ const NewTaskComponent = () => {
 
   const handleAddTask = async () => {
     if (taskName.trim() !== '') {
-      console.log(taskName);
       const target_url = `${config.apiBaseUrl}/add_task`;
       try {
         const formdata = new FormData();
         formdata.append("task_name", taskName);
 
         const requestOptions = {
-        method: "POST",
-        body: formdata,
-        redirect: "follow"
+          method: "POST",
+          body: formdata,
+          redirect: "follow"
         };
 
         const response = await fetch(target_url, requestOptions);
@@ -40,10 +39,10 @@ const NewTaskComponent = () => {
 
         const data = await response.json();
         const message = data.message;
-        setBannerMessage(message + taskName );
+        setBannerMessage(`${message} '${taskName}'`);
         setBannerType('success');
         setShowBanner(true);
-        handleInputChange(''); // Clear input field
+        setTaskName(''); // Clear input field
       } catch (error) {
         console.error('Error adding task:', error);
         setBannerMessage('Failed to add task. Please try again.');
@@ -58,15 +57,14 @@ const NewTaskComponent = () => {
   };
 
   return (
-    <div>
-      {/* Your component JSX */}
-      <input
-        type="text"
-        value={taskName}
+    <div className="new-task-container">
+      <input 
+        type="text" 
+        value={taskName} 
         onChange={(e) => handleInputChange(e.target.value)}
+        placeholder="Add a new task..."
       />
-      <button onClick={handleAddTask}>Add Task</button>
-      {/* Conditionally render NotificationBanner */}
+      <button onClick={handleAddTask}>+</button>
       {showBanner && (
         <Banner type={bannerType} message={bannerMessage} onClose={() => setShowBanner(false)} timeout={3000} />
       )}
@@ -116,6 +114,7 @@ const ActiveTasksComponent = () => {
     </div>
   );
 };
+
 
 
 

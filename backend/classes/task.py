@@ -37,7 +37,7 @@ class Task(Base):
     Due_Date = Column(DateTime)
     Estimate_in_minutes = Column(Integer)
     Tags_associated = Column(String(255))
-    parentid = Column(Integer)
+    ParentID = Column(Integer)
     Actual_Effort_in_minutes = Column(Integer)
     Project_ID_associated = Column(Integer)
     Syllabus_ID_associated = Column(Integer)
@@ -62,7 +62,7 @@ class Task(Base):
         self.Due_Date = due_date
         self.Estimate_in_minutes = estimate_minutes
         self.Tags_associated = tags_associated
-        self.parentid = parentid
+        self.ParentID = parentid
         self.Actual_Effort_in_minutes = 0
         self.Project_ID_associated = project_id_associated
         self.Syllabus_ID_associated = syllabus_id_associated
@@ -90,7 +90,7 @@ class Task(Base):
         self.status= Status.COMPLETED.value
         
         
-    def update(self, name=None, description=None, priority=None, estimate_minutes=None, tags=None, subtasks=None, project_id_associated=None, syllabus_id_associated=None, is_repeatable=None):
+    def update(self, name=None, description=None, priority=None, estimate_minutes=None, tags=None, parentid=None, project_id_associated=None, syllabus_id_associated=None, is_repeatable=None):
         if name:
             self.name=name
         if description:
@@ -101,8 +101,8 @@ class Task(Base):
             self.estimate_minutes=estimate_minutes
         if tags:
             self.tags_associated=tags
-        if subtasks:
-            self.subtasks= subtasks
+        if parentid:
+            self.parentid= parentid
         if project_id_associated:
             self.project_id_associated=project_id_associated
         if syllabus_id_associated:
@@ -169,12 +169,12 @@ class Task(Base):
         self.Tags_associated = value
 
     @property
-    def subtasks(self):
-        return self.Subtasks
+    def parentid(self):
+        return self.ParentID
 
-    @subtasks.setter
-    def subtasks(self, value):
-        self.Subtasks = value
+    @parentid.setter
+    def parentid(self, value):
+        self.ParentID = value
 
     @property
     def actual_effort_minutes(self):
@@ -257,7 +257,6 @@ if __name__ == '__main__':
         description='This is a sample task.',
         priority='High',
         tags_associated='tag1,tag2',
-        subtasks='Subtask 1, Subtask 2',
         project_id_associated=1,
         syllabus_id_associated=2,
         is_repeatable=True

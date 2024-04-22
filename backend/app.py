@@ -58,7 +58,7 @@ def add_task():
 	description = request.form.get('description', None)
 	priority = request.form.get('priority', 'low')
 	tags = request.form.get('tags', None)
-	subtasks = request.form.get('subtasks', None)
+	parentid = request.form.get('parentid', None)
 	project_id_associated = request.form.get('project_id_associated', None)
 	syllabus_id_associated = request.form.get('syllabus_id_associated', None)
 	is_repeatable = request.form.get('is_repeatable', False)
@@ -71,7 +71,7 @@ def add_task():
             description=description,
             priority=priority,
             tags=tags,
-            subtasks=subtasks,
+            parentid=parentid,
 			estimate_minutes=estimate_minutes,
             project_id_associated=project_id_associated,
             syllabus_id_associated=syllabus_id_associated,

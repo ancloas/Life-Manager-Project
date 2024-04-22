@@ -15,22 +15,37 @@ const RectangleComponent = ({ initialX, initialY }) => {
 };
 
 const GridComponent = ({ Blocksof10mins }) => {
-    console.log('The block of 10 minutes are', Blocksof10mins);
-    const hours = [];
-    const data= Blocksof10mins
-    const blocks= Blocksof10mins["timeline"]
-    var i=0
-    console.log('block list is ', blocks);
-     blocks.forEach(element => {
-       i=i+1
-       hours.push(
-         <div className="hour" key={`hour_${i}`}>
-             {i} 
-         </div>
-     );
-     });
-    return <div className="grid-container">{hours}</div>;
+    const blocks_10 = [];
+    const blocks = Blocksof10mins["timeline"];
+    const number_hours = blocks.length*10/60;
+
+
+    blocks.forEach((element, index) => {
+        let blockClassName = "block10";
+        if (element.state === "present") {
+            blockClassName += " present";
+        } else if (element.state === "future") {
+            blockClassName += " future";
+        } else if (element.state === "past") {
+            blockClassName += " past";
+        }
+
+        if (element.is_O_clock)
+            blockClassName+=" hour"
+
+        blocks_10.push(
+            <div className={blockClassName} key={`block10_${index}`}>
+                {blocks.length - index} {/* Display block index */}
+            </div>
+        );
+    });
+
+    return( 
+    <div className="grid-container row">{blocks_10}</div>
+
+);
 };
+
 
 export const TimeFrame = () => {
     const [times, setTimes] = useState(null);
