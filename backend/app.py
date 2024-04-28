@@ -63,6 +63,11 @@ def add_task():
 	syllabus_id_associated = request.form.get('syllabus_id_associated', None)
 	is_repeatable = request.form.get('is_repeatable', False)
 	estimate_minutes = request.form.get('estimate_minutes', None)
+
+	#create session
+	session= session_manager.create_session()
+	task_manager = Task_Manager(session=session)
+	
     # Add the task using the Task_Manager object
 	try:
 		task_manager.add_task(
@@ -86,8 +91,21 @@ def update_task():
 	# Extract task ID from the request
 	encrypyed_task_id = request.form.get('task_id')
 	task_name = request.form.get('task_name')
+	description = request.form.get('description', None)
+	priority = request.form.get('priority', 'low')
+	tags = request.form.get('tags', None)
+	parentid = request.form.get('parentid', None)
+	project_id_associated = request.form.get('project_id_associated', None)
+	syllabus_id_associated = request.form.get('syllabus_id_associated', None)
+	is_repeatable = request.form.get('is_repeatable', False)
+	estimate_minutes = request.form.get('estimate_minutes', None)
+
+	#create session
+	session= session_manager.create_session()
+	task_manager = Task_Manager(session=session)
+
 	try:
-		task_manager.update_task(encrypyed_task_id,name=task_name, encrypted=True)
+		task_manager.update_task(encrypyed_task_id,name=task_name, priority=priority, description=description, parentid=parentid, tags=tags, project_id_associated=project_id_associated, syllabus_id_associated=syllabus_id_associated, is_repeatable=is_repeatable, estimate_minutes=estimate_minutes, encrypted=True)
 		return jsonify({'message': 'Task updated successfully'})
 	except Exception as e:
 		return jsonify({'error': str(e)}), 500 
@@ -106,23 +124,48 @@ def remove_task():
 
 @app.route('/active_tasks', methods=['GET'])
 def list_active_task():
-    # List active tasks using Task_Manager object
-    active_tasks = task_manager.get_active_tasks()
+	#create session
+	session= session_manager.create_session()
+	task_manager = Task_Manager(session=session)
+	# List active tasks using Task_Manager object
+	active_tasks = task_manager.get_active_tasks()
     
     # Prepare data for response
-    task_list = [task.to_dict() for task in active_tasks]
+	task_list = [task.to_dict() for task in active_tasks]
     
-    return jsonify(task_list), 200
+	return jsonify(task_list), 200
 
 @app.route('/all_tasks', methods=['GET'])
 def all_tasks():
+	#create session
+	session= session_manager.create_session()
+	task_manager = Task_Manager(session=session)
+	
 	tasks = task_manager.list_all_tasks_for_user_id(user_id=current_user_id)
 	task_list = [task.to_dict() for task in tasks]
 	return jsonify(task_list), 200
 
+@app.route('/get_task_by_id', methods= ['POST'])
+def get_task_by_id():
+	encrypyed_task_id = request.form.get('task_id')
+	
+	#create session
+	session= session_manager.create_session()
+	task_manager = Task_Manager(session=session)
+
+	print(encrypyed_task_id)
+	task = task_manager.get_task_by_id(task_id=encrypyed_task_id, encryted=True)
+	session.close()
+	return jsonify(task.to_dict()), 200
+
+
 
 @app.route('/complete_task', methods = ['POST'])
 def complete_task():
+	#create session
+	session= session_manager.create_session()
+	task_manager = Task_Manager(session=session)
+
 	encrypyed_task_id = request.form.get('task_id')
 	task_manager.complete_task(task_id=encrypyed_task_id, encryted=True)
 	return jsonify('task completed successfully'), 200

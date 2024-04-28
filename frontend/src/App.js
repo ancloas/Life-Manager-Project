@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
-import TaskDetails from './components/home/snippets/task/taskdetail';
+import TaskDetails from './components/task_details_screen/taskdetail';
 import { Home } from './components/home/home'
 
 function About() {
@@ -29,7 +29,7 @@ function App() {
           <Route path="/" index element={<Home/>} />
           <Route path="/about" element={<About/>} />
           <Route path="/contact" element={<Contact/>} />
-          <Route path="/task_details" element={<TaskDetails/>} />
+          <Route path="/task_details/:taskId" element={<TaskDetails />} />
         </Routes>
       </div>
     </Router>

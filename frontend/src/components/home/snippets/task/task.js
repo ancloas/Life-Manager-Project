@@ -19,13 +19,7 @@ const TaskComponent = ({ task }) => {
     <div className="task-content">
       <Checkbox />
       <PlayButton />
-      <Link
-        to={{
-          pathname: `/task_details`,
-          state: { task: task }
-        }}
-        className="task-link"
-      >
+      <Link to={`/task_details/${task.Encoded_Task_ID}`}>
         {task.Name}
       </Link>
       <LinearScaleIcon />
