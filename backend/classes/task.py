@@ -82,7 +82,7 @@ class Task(Base):
     
     
     def update_status(self, new_status):
-        if new_status in Status.values:
+        if new_status in Status.values.value:
             self.status=new_status
     
 
@@ -90,13 +90,15 @@ class Task(Base):
         self.status= Status.COMPLETED.value
         
         
-    def update(self, name=None, description=None, priority=None, estimate_minutes=None, tags=None, parentid=None, project_id_associated=None, syllabus_id_associated=None, is_repeatable=None):
+    def update(self, name=None, description=None, priority=None,status=None, estimate_minutes=None, tags=None, parentid=None, project_id_associated=None, syllabus_id_associated=None, is_repeatable=None):
         if name:
             self.name=name
         if description:
             self.description=description    
         if priority:
             self.priority=priority
+        if status and (status in Status.values.value):
+            self.status=status
         if estimate_minutes:
             self.estimate_minutes=estimate_minutes
         if tags:

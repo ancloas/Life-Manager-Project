@@ -92,6 +92,7 @@ def update_task():
 	encrypyed_task_id = request.form.get('task_id')
 	task_name = request.form.get('task_name')
 	description = request.form.get('description', None)
+	status =  request.form.get('status', None)
 	priority = request.form.get('priority', 'low')
 	tags = request.form.get('tags', None)
 	parentid = request.form.get('parentid', None)
@@ -105,9 +106,10 @@ def update_task():
 	task_manager = Task_Manager(session=session)
 
 	try:
-		task_manager.update_task(encrypyed_task_id,name=task_name, priority=priority, description=description, parentid=parentid, tags=tags, project_id_associated=project_id_associated, syllabus_id_associated=syllabus_id_associated, is_repeatable=is_repeatable, estimate_minutes=estimate_minutes, encrypted=True)
+		task_manager.update_task(encrypyed_task_id,name=task_name, priority=priority, description=description, status=status, parentid=parentid, tags=tags, project_id_associated=project_id_associated, syllabus_id_associated=syllabus_id_associated, is_repeatable=is_repeatable, estimate_minutes=estimate_minutes, encrypted=True)
 		return jsonify({'message': 'Task updated successfully'})
 	except Exception as e:
+		print(e)
 		return jsonify({'error': str(e)}), 500 
 
 

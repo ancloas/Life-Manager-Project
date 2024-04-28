@@ -23,10 +23,10 @@ class Task_Manager:
         self.session.add(task)
         self.session.commit()
 
-    def update_task(self, task_id,  name=None, description=None, priority=None, estimate_minutes=None, tags=None, parentid=None, project_id_associated=None, syllabus_id_associated=None, is_repeatable=None, encrypted=False):
+    def update_task(self, task_id,  name=None, description=None, priority=None, status=None, estimate_minutes=None, tags=None, parentid=None, project_id_associated=None, syllabus_id_associated=None, is_repeatable=None, encrypted=False):
         
         task = self.get_task_by_id(task_id, encryted= encrypted)
-        task.update(name=name, description=description, priority=priority, estimate_minutes=estimate_minutes, tags=tags, parentid=parentid, project_id_associated= project_id_associated, syllabus_id_associated= syllabus_id_associated, is_repeatable= is_repeatable)  
+        task.update(name=name, description=description, priority=priority, status=status, estimate_minutes=estimate_minutes, tags=tags, parentid=parentid, project_id_associated= project_id_associated, syllabus_id_associated= syllabus_id_associated, is_repeatable= is_repeatable)  
         self.session.commit()
 
 
