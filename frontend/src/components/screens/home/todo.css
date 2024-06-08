@@ -1,0 +1,38 @@
+.new-task-container {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  background-color: #f9f9f9;
+  border-bottom: 1px solid #ccc;
+}
+
+.new-task-container input {
+  flex: 1;
+  padding: 10px;
+  margin-right: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.new-task-container button {
+  padding: 10px 20px;
+  border: none;
+  background-color: #28a745;
+  color: white;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.new-task-container button:hover {
+  background-color: #218838;
+}
+
+.active-tasks-container {
+  flex: 1;
+  overflow-y: auto; /* Enable vertical scrolling */
+  padding: 10px;
+}
+
+.active-tasks-container h2 {
+  margin-bottom: 0;
+}

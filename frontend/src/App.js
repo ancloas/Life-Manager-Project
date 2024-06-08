@@ -1,8 +1,8 @@
 import React from 'react';
 import './App.css';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
-import TaskDetails from './components/task_details_screen/taskdetail';
-import { Home } from './components/home/home'
+import TaskDetails from './components/screens/task_details_screen/taskdetail';
+import { Home } from './components/screens/home/home'
 
 function About() {
   return <h2>About</h2>;

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./time_component.css";
-import config from '../../config'
+import config from '../../../config';
 
 const RectangleComponent = ({ initialX, initialY }) => {
     const [x, setX] = useState(initialX);
@@ -17,8 +17,7 @@ const RectangleComponent = ({ initialX, initialY }) => {
 const GridComponent = ({ Blocksof10mins }) => {
     const blocks_10 = [];
     const blocks = Blocksof10mins["timeline"];
-    const number_hours = blocks.length*10/60;
-
+    const number_hours = blocks.length * 10 / 60;
 
     blocks.forEach((element, index) => {
         let blockClassName = "block10";
@@ -30,8 +29,9 @@ const GridComponent = ({ Blocksof10mins }) => {
             blockClassName += " past";
         }
 
-        if (element.is_O_clock)
-            blockClassName+=" hour"
+        if (element.is_O_clock) {
+            blockClassName += " hour";
+        }
 
         blocks_10.push(
             <div className={blockClassName} key={`block10_${index}`}>
@@ -40,37 +40,36 @@ const GridComponent = ({ Blocksof10mins }) => {
         );
     });
 
-    return( 
-    <div className="grid-container row">{blocks_10}</div>
-
-);
+    return (
+        <div className="grid-container row">{blocks_10}</div>
+    );
 };
-
 
 export const TimeFrame = () => {
     const [times, setTimes] = useState(null);
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await fetch(`${config.apiBaseUrl}/time_component`);
-                const data = await response.json();
-                console.log(data)
-                setTimes(data);
-            } catch (error) {
-                console.error('Error fetching data:', error);
-            }
-        };
+    const fetchData = async () => {
+        try {
+            const response = await fetch(`${config.apiBaseUrl}/time_component`);
+            const data = await response.json();
+            console.log(data);
+            setTimes(data);
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    };
 
-        fetchData();
+    useEffect(() => {
+        fetchData(); // Initial fetch
+
+        const interval = setInterval(fetchData, 300000); // Fetch data every 5 minutes (300000 milliseconds)
+
+        return () => clearInterval(interval); // Cleanup interval on component unmount
     }, []);
 
-    // Render GridComponent only when times is not null
     return (
         <div>
-            <div className="row">
-                <div className="heading"><h3 >Time</h3></div>
-            </div>
+            <h2>Time</h2>
             <div className="row">
                 {times && <GridComponent Blocksof10mins={times} />}
             </div>

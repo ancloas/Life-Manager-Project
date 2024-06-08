@@ -1,12 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import Button from '../utilities/button';
-import Input from '../utilities/input';
-import config from '../../config'
-import Banner from '../utilities/banner';
+import config from '../../../config';
+import Banner from '../../utilities/banner';
 import TaskComponent from './snippets/task/task';
 import TaskListComponent from './snippets/task/tasklist';
 import './todo.css';
-
 
 const NewTaskComponent = () => {
   const [taskName, setTaskName] = useState('');
@@ -72,8 +69,6 @@ const NewTaskComponent = () => {
   );
 };
 
-
-
 const ActiveTasksComponent = () => {
   const [tasks, setTasks] = useState([]);
 
@@ -108,25 +103,20 @@ const ActiveTasksComponent = () => {
   }, []); // Empty dependency array means this effect runs only once after the component mounts
 
   return (
-    <div>
-      <h2>Active Tasks</h2>
+    <div className="active-tasks-container">
+      {/* <h2>Active Tasks</h2> */}
       <TaskListComponent tasks={tasks}/>
     </div>
   );
 };
 
-
-
-
-function TodoComponent()
-{ return (
-  <div>
-    <NewTaskComponent />
-    <ActiveTasksComponent />
-  </div>
-);
-  
+function TodoComponent() {
+  return (
+    <div className="todo-container">
+      <NewTaskComponent />
+      <ActiveTasksComponent />
+    </div>
+  );
 }
-
 
 export default TodoComponent;

@@ -1,0 +1,24 @@
+
+li {
+    list-style: none; /* Remove bullets from list */
+    padding: 0; /* Remove default padding */
+    margin: 0; /* Remove default margin */
+  }
+
+.task-list-container {
+    height: 50%; /* Ensure the container takes the full available height */
+    max-height: 200px; /* Maximum height with scrolling enabled */
+    overflow-y: auto; /* Enable vertical scrolling */
+    border: 1px solid #c5baba; /* Optional: Add a border for better visual separation */
+    padding: 10px; /* Optional: Add some padding */
+}
+
+.task-list-container ul {
+    list-style-type: none; /* Remove default list styling */
+    padding: 0; /* Remove default padding */
+    margin: 0; /* Remove default margin */
+}
+
+.task-list-container li {
+    margin-bottom: 10px; /* Add some space between tasks */
+}
