@@ -69,7 +69,6 @@ export const TimeFrame = () => {
 
     return (
         <div>
-            <h2>Time</h2>
             <div className="row">
                 {times && <GridComponent Blocksof10mins={times} />}
             </div>
