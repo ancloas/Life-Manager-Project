@@ -23,7 +23,6 @@ const Sidebar = () => {
           <li><Link to="/">Dashboard</Link></li>
           <li><Link to="/ToDo">ToDo</Link></li>
           <li><Link to="/calendar">Calendar</Link></li> {/* Added calendar link */}
-          <li><Link to="/Scheduler">Calendar</Link></li>
           <li><Link to="/projects">Projects</Link></li>
           <li><Link to="/domains">Domains</Link></li>
         </ul>
