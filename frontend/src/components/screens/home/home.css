@@ -6,6 +6,12 @@ h2{
     text-align: center;
     font-size: 25px;
 }
+
+h3{
+ margin-top: 15px;
+ margin-bottom: 15px;
+
+}
 .container{
     gap: 20px; /* Adjust gutter size as needed */
 }

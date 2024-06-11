@@ -38,12 +38,33 @@
 }
 /* App.css */
 
+/* App.css */
+
 .app-container {
   display: flex;
 }
 
 .main-content {
-  margin-left: 220px; /* Width of the sidebar + some spacing */
+  margin-left: 200px; /* Adjusted width of the sidebar */
   padding: 20px;
   flex-grow: 1;
+  transition: margin-left 0.3s;
+}
+
+/* Adjust main content margin based on sidebar state */
+.sidebar.collapsed + .main-content {
+  margin-left: 30px;
+}
+
+/* Media queries for responsive behavior */
+@media (max-width: 768px) {
+  .main-content {
+    margin-left: 30px; /* Always collapsed on small screens */
+  }
+  .sidebar.open + .main-content {
+    margin-left: 200px;
+  }
+  .sidebar.collapsed + .main-content {
+    margin-left: 30px;
+  }
 }
