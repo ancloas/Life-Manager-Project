@@ -1,0 +1,54 @@
+/* src/components/calendar/CalendarPage.css */
+
+/* Main container for the calendar */
+.calendar-page {
+  padding: 20px;
+  background-color: #f9f9f9;
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+
+/* Styling for calendar events */
+.rbc-event {
+  background-color: #0078d4; /* Customize event background color */
+  color: white;
+  border: none;
+  border-radius: 4px;
+}
+
+/* Adjust month view styles */
+.rbc-month-view {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* Adjust day view styles */
+.rbc-time-view {
+  border: none;
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* Styling for calendar headers */
+.rbc-header {
+  background-color: #f3f3f3;
+  font-weight: bold;
+  padding: 10px;
+}
+
+/* Styling for timeslots */
+.rbc-time-slot {
+  border: none;
+  border-bottom: 1px solid #ddd;
+}
+
+/* Event title */
+.rbc-event-label {
+  font-weight: bold;
+  margin-right: 5px;
+}
+
+/* Selected event */
+.rbc-selected {
+  background-color: #005a9e !important; /* Adjust selection color */
+}
